@@ -25,13 +25,7 @@
         }
 
     </style>
-    <script>
-
-        const teamNames = ["Chiefs","Raiders","Cubs"];
-        const cookeis = ["Chocolate Chip Cookie", "Sugar Cookie", "Peanut Butter Cookie"];
-        const candies = ["M&Ms","Baby Ruth","Snickes"];
-
-    </script>
+    
 </head>
 <body>
     <div id="container">
@@ -66,7 +60,7 @@
                             <input type="text" name="newTeamName" id="newTeamName">
                         </form>
                         <p>
-                            <input type="submit" value="Add Team Name">
+                            <input type="button" id="addTeamName" value="Add Team Name"> <!-- Updated to type="button" -->
                             <input type="reset">
                         </p>
                     </div> 
@@ -102,7 +96,7 @@
                         <h4>Instructions:</h4>
                         <ol>
                             <li>Use the createElement() technique and the cookies array to populate the productDisplay select element.</li>
-                            <li>When a product is selected is selected, display the selected name next to 'Selected Product:'' on the page.</li>
+                            <li>When a product is selected, display the selected name next to 'Selected Product:'' on the page.</li>
                             <li>Change the contents of the productDisplay based on which radio button is selected.</li>
                             <li>The reset button should reset the fields to their original values.</li>
                         </ol>
@@ -116,6 +110,99 @@
 
         </footer>
     </div>
+    <script>
+        // Team names array
+        let teamNames = ["Chiefs", "Raiders", "Cubs"];
 
+        // Populate teamNames dropdown using document.write()
+        function populateTeamNamesWithDocumentWrite() {
+            let select = document.getElementById('teamNames');
+            teamNames.forEach(team => {
+                let option = document.createElement('option');
+                option.value = team;
+                option.textContent = team;
+                select.appendChild(option);
+            });
+        }
+
+        // Call the function to populate the dropdown
+        populateTeamNamesWithDocumentWrite();
+
+        // Cookies and candies arrays
+        let cookies = ["Chocolate Chip Cookie", "Sugar Cookie", "Peanut Butter Cookie"];
+        let candies = ["M&Ms", "Baby Ruth", "Snickers"];
+
+        // Populate productDisplay dropdown using createElement()
+        function populateProductDisplayWithCreateElement(items) {
+            let select = document.getElementById('productDisplay');
+            select.innerHTML = ''; // Clear existing options
+            let defaultOption = document.createElement('option');
+            defaultOption.value = 'none';
+            defaultOption.textContent = 'Select a Product';
+            select.appendChild(defaultOption);
+
+            items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                select.appendChild(option);
+            });
+        }
+
+        // Initialize with cookies
+        populateProductDisplayWithCreateElement(cookies);
+
+        // Handle radio button changes
+        document.getElementById('displayCookies').addEventListener('change', () => {
+            populateProductDisplayWithCreateElement(cookies);
+        });
+
+        document.getElementById('displayCandy').addEventListener('change', () => {
+            populateProductDisplayWithCreateElement(candies);
+        });
+
+        // Handle team name selection
+        document.getElementById('teamNames').addEventListener('change', function() {
+            document.getElementById('outputName').textContent = this.value;
+        });
+
+        // Add new team name
+        document.getElementById('addTeamName').addEventListener('click', function() {
+            let newTeamName = document.getElementById('newTeamName').value;
+            if (newTeamName) {
+                let select = document.getElementById('teamNames');
+                let option = document.createElement('option');
+                option.value = newTeamName;
+                option.textContent = newTeamName;
+                select.appendChild(option);
+                document.getElementById('newTeamName').value = ''; // Clear input field
+            }
+        });
+
+        // Handle reset
+        document.querySelector('input[type="reset"]').addEventListener('click', function() {
+            document.getElementById('outputName').textContent = '';
+            document.getElementById('productDisplay').value = 'none';
+            document.getElementById('outputProduct').textContent = '';
+            document.getElementById('newTeamName').value = '';
+            document.getElementById('displayCookies').checked = false;
+            document.getElementById('displayCandy').checked = false;
+        });
+
+        // Handle product selection
+        document.getElementById('productDisplay').addEventListener('change', function() {
+            document.getElementById('outputProduct').textContent = this.value;
+        });
+        function resetTeamNames() {
+    let select = document.querySelector('teamNames');
+    select.innerHTML = ''; // Clear all options
+    let defaultOption = document.querySelector('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Select a team';
+    select.appendChild(defaultOption); // Re-add the default option
+}
+let select
+</script>
+    
 </body>
 </html>
