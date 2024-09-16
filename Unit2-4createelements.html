@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Elements assignment</title>
+    <style>
+        /* CSS to style the formatted div */
+        .formatted-div {
+            background-color: #f0f8ff; /* Light blue background  */
+            border: 2px solid #b0c4de; /* Light steel blue border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Space inside div */
+            margin: 20px; /* Space outside div */
+            font-family: Arial, sans-serif; /* Font style */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+
+        .formatted-div h1 {
+            color: #4682b4; /* Steel blue color for heading */
+        }
+
+        .formatted-div p {
+            color: #333; /* Dark gray color for text */
+            font-size: 16px; /* Font size for text */
+        }
+    </style>
+</head>
+<body>
+
+<div id="container"></div> <!-- Container dynamic content -->
+
+<script>
+    // Function to create and add  dropdown list
+    function createDropdown() {
+        let select = document.createElement('select');
+        select.id = 'dropdown';
+
+        let defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'default option';
+        defaultOption.selected = true;
+        select.appendChild(defaultOption);
+
+        const options = [
+        { value: 'option1', text: 'Option 1' },
+            { value: 'option2', text: 'Option 2' },
+            { value: 'option3', text: 'Option 3' }
+        ];
+
+        options.forEach(option => {
+            let optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            select.appendChild(optionElement);
+        });
+
+        return select;
+    }
+
+    // Function to create and add  set of radio buttons
+    function createRadioButtons() {
+        let fieldset = document.createElement('fieldset');
+        let legend = document.createElement('legend');
+        legend.textContent = 'Select a choice:';
+        fieldset.appendChild(legend);
+
+        const radioOptions = [
+            { id: 'radio1', name: 'choice', value: 'choice1', text: 'Choice 1' },
+            { id: 'radio2', name: 'choice', value: 'choice2', text: 'Choice 2' },
+            { id: 'radio3', name: 'choice', value: 'choice3', text: 'Choice 3' }
+        ];
+
+        radioOptions.forEach(option => {
+            let input = document.createElement('input');
+            input.type = 'radio';
+            input.id = option.id;
+            input.name = option.name;
+            input.value = option.value;
+
+            let label = document.createElement('label');
+            label.htmlFor = option.id;
+            label.textContent = option.text;
+
+            fieldset.appendChild(input);
+            fieldset.appendChild(label);
+            fieldset.appendChild(document.createElement('br')); // Line break between options
+        });
+
+        return fieldset;
+    }
+
+    // Function to create and add formatted div element with content
+    function createFormattedDiv() {
+        let div = document.createElement('div');
+        div.className = 'formatted-div';
+
+        let heading = document.createElement('h1');
+        heading.textContent = 'Welcome to Mr.guillions class';
+
+        let paragraph = document.createElement('p');
+        paragraph.textContent = 'dynamically created and formatted div element.  div is styled using CSS to have a light blue background, rounded corners, and a shadow effect.';
+
+        div.appendChild(heading);
+        div.appendChild(paragraph);
+
+        return div;
+    }
+
+    // Add elements to container
+    let container = document.getElementById('container');
+    container.appendChild(createDropdown());
+    container.appendChild(createRadioButtons());
+    container.appendChild(createFormattedDiv());
+</script>
+
+</body>
+</html>
+<footer>
+    <p>pages footer</p>
+</footer>

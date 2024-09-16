@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+.formatted-div {
+            background-color: #f0f8ff; /* Light blue background in div */
+            border: 2px solid #b0c4de; /* Light steel blue border around div*/
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Space inside div */
+            margin: 20px; /* Space outside div */
+            font-family: Arial, sans-serif; /* Font style */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+        .formatted-div h1 {
+            color: #4682b4; /* Steel blue color for heading */
+        }
+
+        .formatted-div p {
+            color: #333; /* Dark gray color for text */
+            font-size: 16px; /* Font size for text */
+        }
+
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>assignment 2-3</title>
+</head>
+<body>
+ <script>
+    // Using document.write() for dropdown list with three options
+    document.write('<label for="dropdown">select an option:</label>');
+    document.write('<select id="dropdown">');
+    document.write('<option value="" selected> default option</option>');
+    document.write('<option value="option1">Option 1</option>');
+    document.write('<option value="option2">Option 2</option>');
+    document.write('<option value="option3">Option 3</option>');
+    document.write('</select><br><br>');
+
+    // Use document.write() and create radio buttons
+    document.write('<fieldset>');
+    document.write('<legend>Select a choice:</legend>');
+    document.write('<input type="radio" id="radio1" name="choice" value="choice1">');
+    document.write('<label for="radio1">Choice 1</label><br>');
+    document.write('<input type="radio" id="radio2" name="choice" value="choice2">');
+    document.write('<label for="radio2">Choice 2</label><br>');
+    document.write('<input type="radio" id="radio3" name="choice" value="choice3">');
+    document.write('<label for="radio3">Choice 3</label>');
+    document.write('</fieldset><br><br>');
+
+    // document.write()  formatted div element with content
+    document.write('<div class="formatted-div">');
+    document.write('<h1>javascript class with mr.gullion</h1>');
+    document.write('<p> div is styled using CSS to have a light blue background, rounded corners, and a shadow effect.</p>');
+    document.write('</div>');
+</script>
+</body>
+</html>
+
+<footer>
+    <p>The end of this page/assignment</p>
+</footer>

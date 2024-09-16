@@ -84,8 +84,8 @@
 
 	<script>
 		document.getElementById('contactType').addEventListener('change', function() {
-			const selectedValue = this.value;
-			const displayContainer = document.getElementById('displayContainer');
+			let selectedValue = this.value;
+			let displayContainer = document.getElementById('displayContainer');
 
 			// Clear previous content in displayContainer
 			displayContainer.innerHTML = '';
