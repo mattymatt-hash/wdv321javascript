@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WDV321 Advanced Javascript - AJAX Text Example</title>
+<!--
+
+                      ---note---
+                to display in a list format....
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WDV321 Advanced Javascript - AJAX Text Example</title>
+    <script>
+        function getData() {
+            let xmlhttp = new XMLHttpRequest();
+            let url = "900668871.js"; // Ensure this file is accessible
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    const data = JSON.parse(xmlhttp.responseText); // Parse JSON response
+                    let listItems = '';
+                    data.forEach(item => {
+                        listItems += `<li>${item}</li>`; // Create list items
+                    });
+                    document.getElementById("myDiv").innerHTML = `<ul>${listItems}</ul>`; // Update div with the list
+                }
+            };
+
+            xmlhttp.open("GET", url, true); // Ensure you use GET method
+            xmlhttp.send();
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        #myDiv {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none; /* Remove default bullets */
+            padding: 0;
+        }
+
+        li {
+            background: #f2f2f2;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>WDV321 Advanced Javascript</h1>
+
+<h2>AJAX Text Example using Javascript</h2>
+
+<p>This example will use AJAX to access a file on the server when the button is clicked.  
+The contents of the file will be placed inside a list.</p>
+
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="getData()">Change Content</button>
+
+</body>
+</html>
+  
+
+                                     ---- NOTE----
+                             modify 900668871.js  with the following
+
+[
+    "Item 1",
+    "Item 2",
+    "Item 3",
+    "Item 4"
+]
+
+
+
+-->
+<script>
+	function getData()
+	{
+		let xmlhttp = new XMLHttpRequest();
+let url = "900668871.js";
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+			}
+		}
+		
+		xmlhttp.open("post",
+		url );
+		
+		xmlhttp.send();
+	}
+</script>
+</head>
+
+<body>
+
+<h1>WDV321 Advanced Javascript</h1>
+
+<h2>AJAX Text Example using Javascript</h2>
+
+<p>This example will use AJAX to access a file on the server when the button is clicked.  
+The contents the file will be placed inside the following heading. It should replace the starting text.
+
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="getData()">Change Content</button>
+
+</body>
+</html>

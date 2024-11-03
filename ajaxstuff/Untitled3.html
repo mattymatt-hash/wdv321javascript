@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDV321 Advanced Javascript - AJAX Text Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<script>
+    // to display data in a table modify HTML with this
+  //<div ng-app="getDataApp" ng-controller="dataControl" id="myDiv">
+   // <h2>AJAX Data Table</h2>
+  //  <table>
+   //         <tr>
+     //           <th>Column 1</th>
+     //           <th>Column 2</th>
+      //          <th>Column 3</th>
+      //      </tr>
+      //  </thead>
+     //   <tbody>
+     //       <tr ng-repeat="item in data">
+       //         <td>{{item.column1}}</td>
+      //          <td>{{item.column2}}</td>
+       //         <td>{{item.column3}}</td>
+      //      </tr>
+     //   </tbody>
+    //</table>
+   // <button type="button" ng-click="getData()">Load Data</button>
+//</div>
+
+//and then use this or similar css
+
+//table {
+ //   width: 100%;
+  //  border-collapse: collapse;
+//}
+
+//th, td {
+ //   border: 1px solid #ddd;
+ //   padding: 8px;
+  //  text-align: left;
+//}
+
+//th {
+//    background-color: #f2f2f2;
+//}
+//
+</script> 
+
+</head>
+<body>
+
+<h1>WDV321 Advanced Javascript</h1>
+
+<h2>AJAX Text Example using AngularJS</h2>
+
+<p>This example will use AJAX to access a file on the server when the button is clicked.  
+The contents of the file will be placed inside the following heading. It should replace the starting text.</p>
+
+<div ng-app="getDataApp" ng-controller="dataControl" id="myDiv">
+    <h2>Let AJAX change this text</h2>
+    <h2>{{textData}}</h2>
+
+    <button type="button" ng-click="getData()">Change Content</button>
+</div>
+
+<script>
+    var app = angular.module('getDataApp', []);
+    app.controller('dataControl', function($scope, $http) {
+        $scope.getData = function() {
+            $http.get("903998004.js")
+                .then(function(response) {
+                    $scope.textData = response.data;
+                })
+                .catch(function(error) {
+                    console.error('Error fetching data:', error);
+                    $scope.textData = 'Error loading content.';
+                });
+        };
+    });
+</script>
+
+</body>
+</html>
