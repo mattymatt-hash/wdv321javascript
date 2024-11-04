@@ -1,0 +1,95 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDV321 Advanced Javascript - AJAX Text Example</title>
+    <!--        
+                                                ---note---
+                        For a responsive grid layout modify the html and css with the following.....
+
+
+       ---htrml---
+
+<div class="grid-container">
+    <div class="grid-item">Item 1</div>
+    <div class="grid-item">Item 2</div>
+    <div class="grid-item">Item 3</div>
+</div>
+
+
+        ---css---
+
+css
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.grid-item {
+    background-color: #ddd;
+    padding: 20px;
+    text-align: center;
+}
+
+
+-->
+   
+     <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            background-color: #f9f9f9;
+        }
+        .student-info {
+            margin: 5px 0;
+        }
+    </style>
+    <script src="jquery-2.1.4.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $.ajax({
+                    url: "900006361.txt",
+                    dataType: "json", // Specify the expected response data type
+                    success: function(result){
+                        // Clear previous content
+                        $("#result").empty();
+                        
+                        // Display student information
+                        $("#result").append(`<div class="student-info"><strong>ID:</strong> ${result.student_id}</div>`);
+                        $("#result").append(`<div class="student-info"><strong>Name:</strong> ${result.student_first_name} ${result.student_last_name}</div>`);
+                        $("#result").append(`<div class="student-info"><strong>Major:</strong> ${result.student_major}</div>`);
+                        $("#result").append(`<div class="student-info"><strong>Credits:</strong> ${result.student_credits}</div>`);
+                        $("#result").append(`<div class="student-info"><strong>GPA:</strong> ${result.student_gpa}</div>`);
+                        $("#result").append(`<div class="student-info"><strong>Registration Date:</strong> ${result.student_registration_date}</div>`);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching data:', error);
+                        $("#result").html("<h2>Error loading content.</h2>"); // Display error in the card
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>WDV321 Advanced Javascript</h1>
+    <h2>AJAX Text Example using JQuery</h2>
+    
+    <p>This example will use AJAX to access a file on the server when the button is clicked.  
+    The contents of the file will be placed inside the card below.</p>
+    
+    <div class="card">
+        <h3>Student Information</h3>
+        <div id="result">Let AJAX change this text</div> <!-- Display results here -->
+    </div>
+    
+    <button type="button">Change Content</button>
+</body>
+</html>
