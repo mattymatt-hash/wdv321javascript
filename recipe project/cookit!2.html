@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Submission</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <form id="recipe-form">
+        <!-- Recipe Heading -->
+        <div>
+            <label for="recipeName">Recipe name:</label>
+            <input type="text" id="recipeName" placeholder="Your dish" required><br>
+
+            <label for="chef-name">Chef Name:</label>
+            <input type="text" id="Chef-name" placeholder="Your name" required><br>
+        </div>
+
+        <!-- Recipe Type -->
+        <div>
+            <label for="recipeType">Recipe Type:</label>
+            <select name="recipeType" id="recipeType" required>
+                <option value="">Select type of recipe</option>
+            </select>
+            <p>Recipe Type: <span id="outputType"></span></p>
+        </div>
+
+        <!-- Recipe Image -->
+        <label for="recipe-image">Recipe Image URL:</label>
+        <input type="text" id="recipe-image"><br>
+        <img id="image-preview" alt="Image Preview" style="max-width: 200px;">
+
+        <!-- Servings and Preparation Time -->
+        <label for="servings">Number of Servings:</label>
+        <input type="number" id="servings" placeholder="Serves how many" required><br>
+
+        <label for="prep-time">Preparation Time:</label>
+        <input type="text" id="prep-time" placeholder="In minutes" required><br>
+
+        <!-- Difficulty Selection -->
+        <label for="difficulty">Difficulty:</label><br>
+        <label>
+            <input type="radio" name="difficulty" value="easy" onclick="showSelectedDifficulty()"> Easy
+        </label><br>
+        <label>
+            <input type="radio" name="difficulty" value="medium" onclick="showSelectedDifficulty()"> Medium
+        </label><br>
+        <label>
+            <input type="radio" name="difficulty" value="hard" onclick="showSelectedDifficulty()"> Hard
+        </label><br>
+        <p>Selected Difficulty: <span id="outputDifficulty"></span></p>
+
+        <!-- Ingredients -->
+        <div id="ingredients-container">
+            <div class="ingredient" id="ingredient-1">
+                <label for="ingredient-name-1">Ingredient 1 Name:</label>
+                <input type="text" name="ingredient-name-1" id="ingredient-name-1" required>
+                <label for="ingredient-amount-1">Amount:</label>
+                <input type="text" name="ingredient-amount-1" id="ingredient-amount-1" required>
+            </div>
+        </div>
+        <button type="button" id="add-another-ingredient">Add Another Ingredient</button><br>
+
+        <!-- Instructions -->
+        <div id="instruction-steps">
+            <div class="instructions" id="instructions-step-1">
+                <label for="instructions">Instructions:</label>
+                <input type="text" id="instructions" placeholder="Step by step" required><br>
+            </div>
+        </div>
+        <button type="button" id="add-another-step">Add Another Step</button><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Recipe</button>
+        <button type="reset">Reset Form</button>
+    
+    </form>
+
+    <script>
+        // Populate recipe types dropdown
+        const recipeTypes = ["drinks", "meals", "snacks", "desserts"];
+        function populateRecipeTypes() {
+            const select = document.getElementById('recipeType');
+            recipeTypes.forEach(type => {
+                let option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);  // Capitalize first letter
+                select.appendChild(option);
+            });
+        }
+        populateRecipeTypes();  // Call the function to populate recipe types on page load
+
+        // Recipe form submission handling
+        document.getElementById('recipe-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form data for static fields
+            const name = document.getElementById('recipeName').value;
+            const chefName = document.getElementById('Chef-name').value;       // Chef name
+            const recipeType = document.getElementById('recipeType').value;    // Recipe type (dropdown)
+            const image = document.getElementById('recipe-image').value;
+            const servings = parseInt(document.getElementById('servings').value, 10);
+            const prepTime = document.getElementById('prep-time').value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
+
+            // Check if recipe name already exists in localStorage
+            const existingRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            const isDuplicate = existingRecipes.some(recipe => recipe.name.toLowerCase() === name.toLowerCase());
+
+            if (isDuplicate) {
+                alert('A recipe with this name already exists. Please choose a different name.');
+                return; // Exit the function to prevent form submission
+            }
+
+            // Collect ingredients
+            const ingredients = [];
+            document.querySelectorAll('.ingredient').forEach((ingredientDiv, index) => {
+                const ingredientName = document.getElementById(`ingredient-name-${index + 1}`).value;
+                const ingredientAmount = document.getElementById(`ingredient-amount-${index + 1}`).value;
+                ingredients.push({ name: ingredientName, amount: ingredientAmount });
+            });
+
+            // Collect instructions
+            const instructions = [];
+            document.querySelectorAll('.instructions').forEach((instructionDiv, index) => {
+                const step = document.getElementById(`instructions-step-${index + 1}`).value;
+                instructions.push(step);
+            });
+
+            // Create new recipe object
+            const newRecipe = {
+                name,
+               chefname,
+               recipeType,
+               image,
+               servings,
+                prepTime,
+                difficulty,
+                ingredients,
+                instructions
+            };
+
+            // Get existing recipes from localStorage
+            const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            recipes.push(newRecipe);
+
+            // Save updated recipes back to localStorage
+            localStorage.setItem('recipes', JSON.stringify(recipes));
+
+            console.log('Recipe saved:', newRecipe);
+        });
+
+        // Add ingredient input dynamically
+        let ingredientCount = 1;
+        document.getElementById('add-another-ingredient').addEventListener('click', function() {
+            ingredientCount++;
+            const newIngredientInputLine = `
+                <div class="ingredient" id="ingredient-${ingredientCount}">
+                    <label for="ingredient-name-${ingredientCount}">Ingredient ${ingredientCount} Name:</label>
+                    <input type="text" name="ingredient-name-${ingredientCount}" id="ingredient-name-${ingredientCount}" required>
+                    <label for="ingredient-amount-${ingredientCount}">Amount:</label>
+                    <input type="text" name="ingredient-amount-${ingredientCount}" id="ingredient-amount-${ingredientCount}" required>
+                </div>
+            `;
+            document.getElementById('ingredients-container').insertAdjacentHTML('beforeend', newIngredientInputLine);
+        });
+
+        // Add instruction input dynamically
+        let instructionCount = 1;
+        document.getElementById('add-another-step').addEventListener('click', function() {
+            instructionCount++;
+            const newInstructionInputLine = `
+                <div class="instructions" id="instructions-step-${instructionCount}">
+                    <label for="instructions-step-${instructionCount}">Step ${instructionCount}:</label>
+                    <input type="text" name="instructions-step-${instructionCount}" id="instructions-step-${instructionCount}" required>
+                </div>
+            `;
+            document.getElementById('instruction-steps').insertAdjacentHTML('beforeend', newInstructionInputLine);
+        });
+
+        // Image preview logic
+        document.getElementById('recipe-image').addEventListener('input', function(event) {
+            const imageUrl = event.target.value;
+            document.getElementById('image-preview').src = imageUrl;
+        });
+
+        // Update the displayed difficulty when a selection is made
+        function showSelectedDifficulty() {
+            const selectedDifficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
+            document.getElementById('outputDifficulty').textContent = selectedDifficulty || 'None selected';
+        }
+
+        // Handle recipe type selection
+        document.getElementById('recipeType').addEventListener('change', function() {
+            const selectedType = this.value;
+            document.getElementById('outputType').textContent = selectedType || 'None selected';
+        });
+   
+        document.getElementById('recipe-form').reset();
+    document.getElementById('outputType').textContent = '';
+    document.getElementById('outputDifficulty').textContent = '';
+    document.getElementById('image-preview').src = '';
+   
+   </script>
+</body>
+</html>
