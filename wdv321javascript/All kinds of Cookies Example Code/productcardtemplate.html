@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .productCard {
+            width: 300px;
+            background-color: aquamarine;
+            padding:5px;
+            border:thin solid blue;
+            border-radius: 15%;
+        }
+
+        .saleNotice {
+            color:red;
+            font-weight: bold;
+        }
+
+
+    </style>
+    <script>
+        let products = [];
+
+        let product1 = {
+            prodName:"Pencil",
+            prodPrice:.49,
+            prodDesc: "Wooden type two pencils. Sold individually",
+            prodSale: false
+        }
+
+        let product2 = {
+            prodName:"Pen",
+            prodPrice:1.49,
+            prodDesc: "Blue ink plastic cap pen",
+            prodSale: true
+        }
+
+        products.push(product1);
+        products.push(product2);
+    </script>
+
+    <script>
+
+        function createProductCards(){
+            //get access to the template object
+            //use the template to build a product card
+            //load the card with the current products data
+            //display the card to the document object
+            alert("inside createProductCards()");
+
+            let tempObject = document.querySelector("template");        //get access to the template
+            let templateObject = tempObject.content.cloneNode(true);    //made a copy of the template to use
+            console.log( templateObject );
+            templateObject.querySelector("div p").innerHTML = products[0].prodName;
+            let spanObject = templateObject.querySelector("span");          //make a copy of the span object
+            templateObject.querySelector("div p:nth-of-type(2)").appendChild(products[0].prodPrice);
+        }
+
+        
+
+    </script>
+
+    <script>
+
+        pageSetup = () => {
+            document.querySelector("button").onclick = function(){
+                createProductCards();
+            }
+        }
+
+    </script>
+
+</head>
+<body onload="pageSetup()">
+    <h1>WDV321 Advanced JavaScript</h1>
+    <h2>Unit-2 Dynamic Content - Dynamic Divs</h2>
+
+    <div class="productCard">
+        <p>Product Name - Sample Card</p>
+        <p>Product Price <span class="saleNotice"></span></p>
+        <p>Product Description</p>
+    </div>
+
+    <template>
+        <div class="productCard">
+            <p>Product Name - Sample Card</p>
+            <p><span id="prodPrice">Product Price</span>  <span class="saleNotice"></span></p>
+            <p>Product Description</p>
+        </div>
+    </template>
+
+    <h3>The following data cards were dynamically created using template technique.</h3>
+    <p>
+        <button onclick="createProductCards()">Create Product Cards</button>
+    </p>
+    <section>
+
+    </section>
+
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script>
+
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].trim();
+                if (cookiePair.startsWith(name + "=")) {
+                    return cookiePair.split("=")[1];
+                }
+            }
+            return null;
+        }
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        pageSetup = () => {
+            // Try to get the pageCount from cookies
+            let pageCount = parseInt(getCookie("pageCounter")) || 0;
+
+            // Increment pageCount
+            pageCount++;
+
+            // Display the updated count
+            document.querySelector("#displayCount").innerHTML = pageCount;
+
+            // Save the new pageCount to the cookie
+            setCookie("pageCounter", pageCount, 3650);
+        }
+
+    </script>
+</head>
+<body onload="pageSetup()">
+    <h1>WDV321 Advanced JavaScript</h1>
+    <h2>Page Counter Example</h2>
+    <div>
+        Page Access Count: <span id="displayCount"></span>
+    </div>
+</body>
+</html>

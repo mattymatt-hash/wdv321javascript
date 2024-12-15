@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>WDV321 Advanced Javascript - JSON</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+	<script src="createJSONArray.js"></script>
+
+	<style>
+		/* Flip card container */
+		.flip-card {
+			background-color: transparent;
+			width: 220px;
+			height: 250px;
+			perspective: 1000px;
+			margin: 20px;
+			display: inline-block;
+		}
+
+		.flip-card-inner {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			transition: transform 0.6s;
+			transform-style: preserve-3d;
+		}
+
+		.flip-card:hover .flip-card-inner {
+			transform: rotateY(180deg);
+		}
+
+		.flip-card-front, .flip-card-back {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
+			border: thin solid blue;
+			box-shadow: 2px 2px 2px grey;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		.flip-card-front {
+			background-color: lightblue;
+		}
+
+		.flip-card-back {
+			background-color: lightcoral;
+			transform: rotateY(180deg);
+		}
+
+		.studentCard h3, .studentCard p {
+			margin: 5px 0;
+		}
+	</style>
+
+	<script>
+		$(document).ready(function () {
+			// Retrieve the students data from local storage
+			let students = JSON.parse(localStorage.getItem("studentsData"));
+
+			for (let i = 0; i < students.length; i++) {
+				createFlipCard(students[i]);
+			}
+
+			function createFlipCard(student) {
+				// Create main flip card container
+				let $flipCard = $("<div>").addClass("flip-card");
+
+				// Create inner container for front and back flip
+				let $flipCardInner = $("<div>").addClass("flip-card-inner");
+
+				// Create front of the card with student ID and GPA
+				let $flipCardFront = $("<div>").addClass("flip-card-front");
+				$flipCardFront.append(`<h3>Student ID: ${student.student_id}</h3>`);
+				$flipCardFront.append(`<p>Student GPA: ${student.student_gpa}</p>`);
+
+				// Create back of the card with student courses
+				let $flipCardBack = $("<div>").addClass("flip-card-back");
+				$flipCardBack.append("<p>Student Courses:</p>");
+				let $courseList = $("<ul>");
+				student.student_courses.forEach(course => {
+					$courseList.append("<li>" + course + "</li>");
+				});
+				$flipCardBack.append($courseList);
+
+				// Append front and back to flip card inner container
+				$flipCardInner.append($flipCardFront).append($flipCardBack);
+
+				// Append inner container to the main flip card container
+				$flipCard.append($flipCardInner);
+
+				// Append the completed flip card to the main container
+				$("#student-container").append($flipCard);
+			}
+		});
+	</script>
+
+</head>
+
+<body>
+	<h1>WDV321 Advanced Javascript</h1>
+	<h2>Unit-8 JSON Objects</h2>
+	<h3>Creating and consuming a JSON object</h3>
+
+	<div id="student-container"></div>
+
+</body>
+
+</html>

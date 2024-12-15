@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDV321 Advanced Javascript - AJAX Text Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>WDV321 Advanced Javascript</h1>
+
+<h2>AJAX Text Example using AngularJS</h2>
+
+<p>This example will use AJAX to access a file on the server when the button is clicked.  
+The contents of the file will be displayed in the table below.</p>
+
+<div ng-app="getDataApp" ng-controller="dataControl" id="myDiv">
+    <h2>Student Data</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Major</th>
+                <th>Credits</th>
+                <th>GPA</th>
+                <th>Registration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-if="studentData">
+                <td>{{studentData.student_id}}</td>
+                <td>{{studentData.student_first_name}}</td>
+                <td>{{studentData.student_last_name}}</td>
+                <td>{{studentData.student_major}}</td>
+                <td>{{studentData.student_credits}}</td>
+                <td>{{studentData.student_gpa}}</td>
+                <td>{{studentData.student_registration_date}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" ng-click="getData()">Load Data</button>
+</div>
+
+<script>
+    var app = angular.module('getDataApp', []);
+    app.controller('dataControl', function($scope, $http) {
+        $scope.getData = function() {
+            $http.get("903998004.js")
+                .then(function(response) {
+                    $scope.studentData = response.data; // Assign fetched data to studentData
+                })
+                .catch(function(error) {
+                    console.error('Error fetching data:', error);
+                    $scope.studentData = null; // Reset on error
+                });
+        };
+    });
+</script>
+
+</body>
+</html>

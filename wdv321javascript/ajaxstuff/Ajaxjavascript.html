@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WDV321 Advanced Javascript - AJAX Text Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        #myDiv {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .student-info {
+            margin: 5px 0;
+            padding: 10px;
+            background: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function getData() {
+            let xmlhttp = new XMLHttpRequest();
+            let url = "900668871.js"; // Ensure this file is accessible
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    const studentData = JSON.parse(xmlhttp.responseText); // Parse JSON response
+                    document.getElementById("myDiv").innerHTML = `
+                        <div class="student-info"><strong>ID:</strong> ${studentData.student_id}</div>
+                        <div class="student-info"><strong>Name:</strong> ${studentData.student_first_name} ${studentData.student_last_name}</div>
+                        <div class="student-info"><strong>Major:</strong> ${studentData.student_major}</div>
+                        <div class="student-info"><strong>Credits:</strong> ${studentData.student_credits}</div>
+                        <div class="student-info"><strong>GPA:</strong> ${studentData.student_gpa}</div>
+                        <div class="student-info"><strong>Registration Date:</strong> ${studentData.student_registration_date}</div>
+                    `; // Display student information
+                }
+            };
+
+            xmlhttp.open("GET", url, true); // Use GET method
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body>
+
+<h1>WDV321 Advanced Javascript</h1>
+<h2>AJAX Text Example using JavaScript</h2>
+
+<p>This example will use AJAX to access a file on the server when the button is clicked.  
+The contents of the file will be placed inside the following section.</p>
+
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="getData()">Change Content</button>
+
+</body>
+</html>

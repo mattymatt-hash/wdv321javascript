@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="flex-container main-layout">
+        <!-- Profile Picture and Bio Section -->
+        <div class="flex-item profile-section">
+            <h2>Profile Picture and Bio</h2>
+            <!-- Add profile image and bio content here -->
+        </div>
+    
+        <!-- Recipe List from Local Storage -->
+        <div class="flex-item recipe-list-section" id="recipe-list">
+            <!-- Recipes will be dynamically populated here -->
+        </div>
+    
+        <!-- Recipe Detail Section -->
+        <div class="flex-item" id="recipe-detail" style="display: none;">
+            <h2 id="recipe-name"></h2>
+            <img id="recipe-image" src="" alt="Recipe Image">
+            <p><strong>Servings: </strong><span id="servings-count"></span></p>
+            <button onclick="changeServings('half')">Half Servings</button>
+            <button onclick="changeServings('normal')">Normal Servings</button>
+            <button onclick="changeServings('double')">Double Servings</button>
+            
+            <p><strong>Preparation Time:</strong> <span id="prep-time"></span></p>
+            <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+    
+            <button onclick="toggleSection('ingredients')">Toggle Ingredients</button>
+            <div id="ingredients-section" style="display: none;">
+                <h3>Ingredients</h3>
+                <ul id="ingredients-list"></ul>
+            </div>
+    
+            <button onclick="toggleSection('instructions')">Toggle Instructions</button>
+            <div id="instructions-section" style="display: none;">
+                <h3>Instructions</h3>
+                <ol id="instructions-list"></ol>
+            </div>
+            
+            <button onclick="goBack()">Back to Recipes</button>
+        </div>
+    
+        <!-- Favorites and Public Recipes Sections -->
+        <div class="flex-item" id="favorites-section">
+            <h3>Favorites</h3>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search..." onkeyup="searchFunction()" />
+                <button onclick="search()">Search</button>
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+        
+        
+        </div>
+       
+       
+       
+        <div class="flex-item" id="public-recipes-section">
+            <h3>Public Recipes</h3>
+        </div>
+    
+        <!-- Additional Placeholder Sections -->
+        <div class="flex-item" id="section-4">
+            <h3>popular-recipe-list</h3>
+        </div>
+        <div class="flex-item" id="section-5">
+            <h3>"new-recipe-list"</h3>
+        </div>
+        <div class="flex-item" id="section-6">
+            <h3>Section 6</h3>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

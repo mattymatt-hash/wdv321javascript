@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Form</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+
+<body>
+    <form id="recipe-form">
+        <label for="chef-name">Chef Name:</label>
+        <input type="text" id="chef-name" required><br>
+
+        <label for="recipe-name">Recipe Name:</label>
+        <input type="text" id="recipe-name" required><br>
+
+        <div>
+            <label for="recipeType">Recipe Type:</label>
+            <select name="recipeType" id="recipeType" required>
+                <option value="">Select type of recipe</option>
+            </select>
+            <p>Recipe Type: <span id="outputType">None selected</span></p>
+        </div>
+
+        <label for="recipe-image">Recipe Image URL:</label>
+        <input type="text" id="recipe-image"><br>
+
+        <label for="servings">Number of Servings:</label>
+        <input type="number" id="servings" required><br>
+
+        <label for="prep-time">Preparation Time:</label>
+        <input type="text" id="prep-time" required><br>
+
+        <label for="difficulty">Difficulty:</label>
+        <label><input type="radio" name="difficulty" value="easy" required> Easy</label><br>
+        <label><input type="radio" name="difficulty" value="medium"> Medium</label><br>
+        <label><input type="radio" name="difficulty" value="hard"> Hard</label><br>
+        <p>Selected difficulty: <span id="difficulty-result">None</span></p>
+
+        <div id="ingredients-container">
+            <h3>Ingredients</h3>
+            <div class="ingredient" id="ingredient-1">
+                <label for="ingredient-name-1">Name:</label>
+                <input type="text" id="ingredient-name-1" required>
+                <label for="ingredient-amount-1">Amount:</label>
+                <input type="text" id="ingredient-amount-1" required>
+                <label for="ingredient-unit-1">Unit:</label>
+                <input type="text" id="ingredient-unit-1" required>
+            </div>
+        </div>
+
+        <button type="button" id="add-another-ingredient">Add Another Ingredient</button><br>
+
+        <label for="instructions">Instructions (comma separated):</label>
+        <input type="text" id="instructions" required><br>
+
+        <button type="submit">Submit Recipe</button>
+    </form>
+
+    <script>
+        // Populate recipeTypes dropdown
+        const recipeTypes = ["drinks", "meals", "snacks", "desserts"];
+        const recipeTypeSelect = document.getElementById('recipeType');
+        recipeTypes.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            recipeTypeSelect.appendChild(option);
+        });
+
+        recipeTypeSelect.addEventListener('change', function() {
+            document.getElementById('outputType').textContent = this.value || 'None selected';
+        });
+
+        document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('difficulty-result').textContent = this.value;
+            });
+        });
+
+        let ingredientCount = 1;
+
+        document.getElementById('add-another-ingredient').addEventListener('click', function() {
+            ingredientCount++;
+            const ingredientDiv = document.createElement('div');
+            ingredientDiv.className = 'ingredient';
+            ingredientDiv.innerHTML = `
+                <label for="ingredient-name-${ingredientCount}">Name:</label>
+                <input type="text" id="ingredient-name-${ingredientCount}" required>
+                <label for="ingredient-amount-${ingredientCount}">Amount:</label>
+                <input type="text" id="ingredient-amount-${ingredientCount}" required>
+                <label for="ingredient-unit-${ingredientCount}">Unit:</label>
+                <input type="text" id="ingredient-unit-${ingredientCount}" required>
+            `;
+            document.getElementById('ingredients-container').appendChild(ingredientDiv);
+        });
+
+        document.getElementById('recipe-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const recipe = {
+                chefName: document.getElementById('chef-name').value,
+                name: document.getElementById('recipe-name').value,
+                type: document.getElementById('recipeType').value,
+                image: document.getElementById('recipe-image').value,
+                servings: parseInt(document.getElementById('servings').value, 10),
+                prepTime: document.getElementById('prep-time').value,
+                difficulty: document.querySelector('input[name="difficulty"]:checked').value,
+                ingredients: Array.from(document.querySelectorAll('#ingredients-container .ingredient')).map(ingredient => ({
+                    name: ingredient.querySelector('input[id^="ingredient-name"]').value,
+                    amount: ingredient.querySelector('input[id^="ingredient-amount"]').value,
+                    unit: ingredient.querySelector('input[id^="ingredient-unit"]').value,
+                })),
+                instructions: document.getElementById('instructions').value.split(',')
+            };
+
+            const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            recipes.push(recipe);
+            localStorage.setItem('recipes', JSON.stringify(recipes));
+            alert('Recipe added successfully!');
+        });
+    </script>
+</body>
+</html>

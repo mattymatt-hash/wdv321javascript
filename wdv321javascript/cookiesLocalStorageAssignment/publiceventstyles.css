@@ -1,0 +1,63 @@
+ {
+    box-sizing: border-box;
+}
+body {
+    background-color: burlywood;
+}
+#container {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: blue;
+}
+
+header {
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+main {
+    display: flex;
+}
+
+main section {
+    width: 50%;
+    border: thin solid black;
+}
+
+section h2, section h3 {
+    text-align: center;
+}
+
+form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+.displayContainer {
+    border: thin solid black;
+    width: 50%;
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.contentArea {
+    display: none; /* Initially hide all content areas */
+}
+
+.show { /* Utility class to display content */
+    display: block;
+}
+
+footer p {
+    text-align: center;
+}
